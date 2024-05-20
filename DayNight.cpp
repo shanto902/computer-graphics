@@ -34,8 +34,8 @@ void keyboard(unsigned char key, int x, int y)
 {
     switch (key)
     {
-    case 'n': start1 = true; break;
-    case 'd': start2 = true; break;
+    case 'n': { start1 = true; start2 = false; } break;
+    case 'd': { start2 = true; start1 = false; } break;
     }
 }
 void circle(float x, float y, double r) {
@@ -66,8 +66,8 @@ void sky() {
 void river() {
     glColor3f(0.255, 0.412, 0.882);
     glBegin(GL_QUADS);
-    glVertex2f(-1.0, -1.0);
-    glVertex2f(-1.0, -0.5);
+    glVertex2f(-5.0, -1.0);
+    glVertex2f(-5.0, -0.5);
     glVertex2f(1.0, -0.1);
     glVertex2f(1.0, -1.0);
     glEnd();
@@ -438,39 +438,41 @@ void house3() {
     glEnd();
 
 }
-
 void boat() {
-    glColor3f(0.000, 0.000, 0.502);
-    glBegin(GL_QUADS);
+    // Body of the boat
+    glColor3f(0.467, 0.298, 0.161); // Brown color
+    glBegin(GL_POLYGON);
     glVertex2f(-0.78, -0.89);
     glVertex2f(-0.84, -0.76);
     glVertex2f(-0.40, -0.76);
     glVertex2f(-0.46, -0.89);
     glEnd();
 
-    glColor3f(0.698, 0.133, 0.1333);
-    glBegin(GL_POLYGON);
+    // Sail of the boat
+    glColor3f(1.0, 1.0, 1.0); // White color
+    glBegin(GL_TRIANGLES);
     glVertex2f(-0.62, -0.75);
     glVertex2f(-0.88, -0.75);
     glVertex2f(-0.62, -0.56);
     glEnd();
 
-    glColor3f(0.184, 0.310, 0.310);
-    glLineWidth(10);
+    // Mast of the boat
+    glColor3f(0.545, 0.271, 0.075); // Dark brown color
+    glLineWidth(6); // Adjust the thickness of the lines
     glBegin(GL_LINES);
-    glVertex2f(-0.54, -0.74);
-    glVertex2f(-0.54, -0.56);
+    glVertex2f(-0.62, -0.76);
+    glVertex2f(-0.62, -0.56);
     glEnd();
 
-    glColor3f(0.184, 0.310, 0.310);
-    glLineWidth(10);
+    // Ropes
+    glColor3f(0.184, 0.310, 0.310); // Dark gray color
     glBegin(GL_LINES);
     glVertex2f(-0.58, -0.76);
     glVertex2f(-0.58, -0.56);
+    glVertex2f(-0.54, -0.76);
+    glVertex2f(-0.54, -0.56);
     glEnd();
-
 }
-
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glColor3f(1, 0, 0);
@@ -553,8 +555,8 @@ void display() {
 
     if (start1 == true)
     {
-        sun_move -= 0.5;
-        if (sun_move < -0.67) {
+        sun_move -= 0.01;
+        if (sun_move < -0.75) {
             glDisable(GL_LIGHT0);
             start1 = false;
             start3 = true;
@@ -565,7 +567,7 @@ void display() {
     {
         start3 = false;
         glEnable(GL_LIGHT0);
-        sun_move += 0.005;
+        sun_move += 0.01;
         if (sun_move > 0.30)
         {
             glEnable(GL_LIGHT0);
